@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>higurashi.moe</title>
+<meta name="description" content="starsbit personal website">
+<meta name="theme-color" content="#14110f">
+<link rel="canonical" href="https://higurashi.moe/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="higurashi.moe">
+<meta property="og:title" content="higurashi.moe">
+<meta property="og:description" content="starsbit personal website">
+<meta property="og:url" content="https://higurashi.moe/">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<canvas id="scene" role="img" aria-label="A painting of the village of Hinamizawa, repainted as you watch"></canvas>
+<canvas id="sprites" aria-hidden="true"></canvas>
+<div id="grain" aria-hidden="true"></div>
+
+<p id="place" aria-live="polite"><span class="label" lang="ja"></span><span class="name"></span></p>
+<p id="clock"><span class="label">Germany</span><time></time></p>
+
+<!-- the logo, in the middle of the picture; it opens a card about who made this -->
+<button id="logo" type="button" aria-expanded="false" aria-controls="about" aria-label="About starsbit"><span class="mark"></span></button>
+
+<!-- the way round the places: back on the left, on on the right -->
+<button id="prev" class="walk" type="button" aria-label="Previous place"><span></span></button>
+<button id="next" class="walk" type="button" aria-label="Next place"><span></span></button>
+
+<!-- the season and the hour, bottom right: as they are in Germany, unless another is picked -->
+<div id="almanac" role="group" aria-label="Season and hour">
+  <div class="choices" role="group" aria-label="Season">
+    <button type="button" data-season="spring" aria-pressed="false">Spring</button>
+    <button type="button" data-season="summer" aria-pressed="false">Summer</button>
+    <button type="button" data-season="autumn" aria-pressed="false">Autumn</button>
+    <button type="button" data-season="winter" aria-pressed="false">Winter</button>
+  </div>
+  <div class="choices" role="group" aria-label="Hour">
+    <button type="button" data-time="day" aria-pressed="false">Day</button>
+    <button type="button" data-time="dusk" aria-pressed="false">Dusk</button>
+    <button type="button" data-time="night" aria-pressed="false">Night</button>
+  </div>
+  <button type="button" class="reset" title="Back to the season and hour it is in Germany">Now</button>
+</div>
+
+<!-- music, bottom left: off until asked for, as browsers want -->
+<button id="music" type="button" aria-pressed="false" aria-label="Play music">
+  <span class="note"></span>
+</button>
+<audio id="tune" src="assets/You.mp3" loop preload="none"></audio>
+<audio id="cicadas" src="assets/higurashi.mp3" loop preload="none"></audio>
+
+<section id="about" aria-label="About starsbit" tabindex="-1" hidden>
+  <img class="logo" src="assets/starsbit-black-cropped.svg" alt="starsbit" width="200" height="62">
+  <p class="who"><strong>stars</strong> // starsbit</p>
+  <p>Software and machine learning engineer, currently working in the <strong>space</strong> domain.</p>
+  <h2>Projects</h2>
+  <ul class="links">
+    <li><a href="https://pc.starsbit.moe/" target="_blank" rel="noopener">pc.starsbit.moe</a></li>
+  </ul>
+  <h2>Elsewhere</h2>
+  <ul class="links">
+    <li><a href="https://github.com/starsbit" target="_blank" rel="noopener">GitHub</a></li>
+    <li><a href="https://x.com/starsbit1" target="_blank" rel="noopener">X</a></li>
+    <li><a href="https://ko-fi.com/starsbit" target="_blank" rel="noopener">Ko-fi</a></li>
+    <li><a href="https://anilist.co/user/starsbit/" target="_blank" rel="noopener">AniList</a></li>
+    <li><a href="https://steamcommunity.com/profiles/76561198162091272" target="_blank" rel="noopener">Steam</a></li>
+    <li><a href="https://discord.com/users/226376714974920704" target="_blank" rel="noopener">Discord</a></li>
+  </ul>
+  <p class="colophon">The painting shows Hinamizawa in the season and at the hour it is in Germany. Click it, or the arrows at its sides, to walk on.<br>© <span class="year"></span> starsbit</p>
+</section>
+<svg class="defs" aria-hidden="true" focusable="false">
+  <!-- a stamp is never quite even: ragged edges and a few spots the ink missed -->
+  <filter id="stamp" x="-10%" y="-10%" width="120%" height="120%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.45" numOctaves="2" seed="7" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="ragged"/>
+    <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -9 6.2" result="ink"/>
+    <feComposite in="ragged" in2="ink" operator="in"/>
+  </filter>
+</svg>
+
+<noscript><p class="note">These paintings are painted by a script; they need JavaScript to appear.</p></noscript>
+
+<script src="js/scenes.js"></script>
+<script src="js/painting.js"></script>
+</body>
+</html>
